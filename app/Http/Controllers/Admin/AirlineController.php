@@ -12,39 +12,44 @@ class AirlineController extends Controller
 {
     public function index(Request $request)
     {
-        if ($request->ajax()) {
-            $data = Airline::query()
-                ->withCount('planes');
-            return Datatables::of($data)->addIndexColumn()
-                ->setRowClass(fn ($row) => 'align-middle')
-                ->addColumn('action', function ($row) {
-                    $td = '<td>';
-                    $td .= '<div class="d-flex">';
-                    $td .= '<a href="' . route('airlines.show', $row->id) . '" type="button" class="btn btn-sm  btn-primary waves-effect waves-light me-1">' . __('buttons.view') . '</a>';
-                    $td .= '<a href="' . route('airlines.edit', $row->id) . '" type="button" class="btn btn-sm  btn-info waves-effect waves-light me-1">' . __('buttons.edit') . '</a>';
-                    $td .= '<a href="javascript:void(0)" data-id="' . $row->id . '" data-url="' . route('airlines.destroy', $row->id) . '"  class="btn btn-sm  btn-danger delete-btn">' . __('buttons.delete') . '</a>';
-                    $td .= "</div>";
-                    $td .= "</td>";
-                    return $td;
-                })
-                ->addColumn('image', function ($row) {
-                    $td = '<td>';
-                    $td .= '<div class="d-flex align-items-center">';
-                    $td .= '<img src="' . getFile($row) . '" class="img-thumbnail avatar-md">';
-                    $td .= '<span class="ms-2">' . $row->name . '</span>';
-                    $td .= "</div>";
-                    $td .= "</td>";
-                    return $td;
-                })
-                ->editColumn('planes_count', function ($row) {
-                    return '<span class="badge badge-pill badge-soft-info font-size-14">' . $row->planes_count . '</span>';
-                })
-                ->editColumn('created_at', fn ($row) => formatDate($row->created_at))
-                ->rawColumns(['action', 'image', 'planes_count'])
-                ->make(true);
-        }
+        // if ($request->ajax()) {
+        //     $data = Airline::query()
+        //         ->withCount('planes');
+        //     return Datatables::of($data)->addIndexColumn()
+        //         ->setRowClass(fn ($row) => 'align-middle')
+        //         ->addColumn('action', function ($row) {
+        //             $td = '<td>';
+        //             $td .= '<div class="d-flex">';
+        //             $td .= '<a href="' . route('airlines.show', $row->id) . '" type="button" class="btn btn-sm  btn-primary waves-effect waves-light me-1">' . __('buttons.view') . '</a>';
+        //             $td .= '<a href="' . route('airlines.edit', $row->id) . '" type="button" class="btn btn-sm  btn-info waves-effect waves-light me-1">' . __('buttons.edit') . '</a>';
+        //             $td .= '<a href="javascript:void(0)" data-id="' . $row->id . '" data-url="' . route('airlines.destroy', $row->id) . '"  class="btn btn-sm  btn-danger delete-btn">' . __('buttons.delete') . '</a>';
+        //             $td .= "</div>";
+        //             $td .= "</td>";
+        //             return $td;
+        //         })
+        //         ->addColumn('image', function ($row) {
+        //             $td = '<td>';
+        //             $td .= '<div class="d-flex align-items-center">';
+        //             $td .= '<img src="' . getFile($row) . '" class="img-thumbnail avatar-md">';
+        //             $td .= '<span class="ms-2">' . $row->name . '</span>';
+        //             $td .= "</div>";
+        //             $td .= "</td>";
+        //             return $td;
+        //         })
+        //         ->editColumn('planes_count', function ($row) {
+        //             return '<span class="badge badge-pill badge-soft-info font-size-14">' . $row->planes_count . '</span>';
+        //         })
+        //         ->editColumn('created_at', fn ($row) => formatDate($row->created_at))
+        //         ->rawColumns(['action', 'image', 'planes_count'])
+        //         ->make(true);
+        // }
+        
+        $airlines = Airline::withCount('planes')->get();
 
-        return view('admin.airlines.index');
+        // return view('your-view', compact('data'));
+
+
+        return view('admin.airlines.index',compact('airlines'));
     }
 
     public function create()

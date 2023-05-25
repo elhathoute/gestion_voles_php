@@ -22,7 +22,7 @@ use App\Http\Controllers\SidebarControler;
 // get all flights in users
 Route::get('/customer_flights',[FlightController::class,'customer_flights'])->middleware('auth')->name('customer_flights');
 // search flight
-Route::post('search_flights/{NumVol?}/{compagnie?}/{aeroport?}', [FlightController::class, 'SearchFlightByNVol'])
+Route::post('search_flights/{NumVol?}/{compagnie?}/{aeroport?}/{provonance?}', [FlightController::class, 'SearchFlightByNVol'])
     ->middleware('auth')
     ->name('search-flight');
 

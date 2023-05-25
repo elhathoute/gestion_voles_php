@@ -42,7 +42,29 @@
                 <th> @lang('translation.actions')</th>
               </tr>
             </thead>
-            <tbody></tbody>
+            <tbody>
+              @foreach($airlines as $airline)
+                <tr>
+                  <td>{{ $airline->id }}</td>
+                  <td>
+                    <div class="d-flex align-items-center">
+                      <img src="{{ getFile($airline) }}" class="img-thumbnail avatar-md">
+                      <span class="ms-2">{{ $airline->name }}</span>
+                    </div>
+                  </td>
+                  <td>{{ $airline->code }}</td>
+                  <td><span class="badge badge-pill badge-soft-info font-size-14">{{ $airline->planes_count }}</span></td>
+                  <td>{{ $airline->created_at }}</td>
+                  <td>
+                    <div class="d-flex">
+                      <a href="{{ route('airlines.show', $airline->id) }}" type="button" class="btn btn-sm btn-primary waves-effect waves-light me-1">@lang('buttons.view')</a>
+                      <a href="{{ route('airlines.edit', $airline->id) }}" type="button" class="btn btn-sm btn-info waves-effect waves-light me-1">@lang('buttons.edit')</a>
+                      <a href="javascript:void(0)" data-id="{{ $airline->id }}" data-url="{{ route('airlines.destroy', $airline->id) }}" class="btn btn-sm btn-danger delete-btn">@lang('buttons.delete')</a>
+                    </div>
+                  </td>
+                </tr>
+              @endforeach
+            </tbody>
           </table>
 
         </div>
@@ -50,6 +72,7 @@
     </div> <!-- end col -->
   </div> <!-- end row -->
 @endsection
+
 @section('script')
   <!-- Required datatable js -->
   <script src="{{ URL::asset('/assets/libs/datatables/datatables.min.js') }}"></script>
@@ -57,73 +80,7 @@
   {{-- datatable init --}}
   <script type="text/javascript">
     $(function() {
-      let table = $('#datatable').DataTable({
-        processing: true,
-        serverSide: true,
-        lengthChange: true,
-        lengthMenu: [10, 20, 50, 100],
-        pageLength: 10,
-        scrollX: true,
-        order: [
-          [0, "desc"]
-        ],
-        // text transalations
-        language: {
-          search: "@lang('translation.search')",
-          lengthMenu: "@lang('translation.lengthMenu1') _MENU_ @lang('translation.lengthMenu2')",
-          processing: "@lang('translation.processing')",
-          info: "@lang('translation.infoShowing') _START_ @lang('translation.infoTo') _END_ @lang('translation.infoOf') _TOTAL_ @lang('translation.infoEntries')",
-          emptyTable: "@lang('translation.emptyTable')",
-          paginate: {
-            "first": "@lang('translation.paginateFirst')",
-            "last": "@lang('translation.paginateLast')",
-            "next": "@lang('translation.paginateNext')",
-            "previous": "@lang('translation.paginatePrevious')"
-          },
-        },
-        ajax: "{{ route('airlines.index') }}",
+      let table = $('#datatable').DataTable({ });
 
-        columns: [{
-            data: 'id'
-          },
-          {
-            data: 'image'
-          },
-          {
-            data: 'code'
-          },
-          {
-            data: 'planes_count',
-            searchable: false
-          },
-          {
-            data: 'created_at',
-          },
-          {
-            data: 'action',
-            orderable: false,
-            searchable: false
-          },
-        ],
-      })
-
-      //init buttons
-      new $.fn.dataTable.Buttons(table, {
-        buttons: [{
-          extend: 'colvis',
-          text: "@lang('translation.colvisBtn')"
-        }]
-      });
-
-      //add buttons to action_btns
-      table.buttons().container()
-        .prependTo($('#action_btns'));
-
-      // select dropdown for change the page length
-      $('.dataTables_length select').addClass('form-select form-select-sm');
-
-      // add margin top to the pagination and info 
-      $('.dataTables_info, .dataTables_paginate').addClass('mt-3');
-    });
   </script>
 @endsection
