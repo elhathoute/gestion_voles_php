@@ -19,7 +19,10 @@
                         @csrf
                         <div class="form-group">
                           <label for="flight_number">Num de vol</label>
-                          <input type="text" class="form-control" id="flight_number" name="flight_number" value="{{ old('flight_number') }}">
+
+                           {{-- <input type="text" class="form-control" id="flight_number" name="flight_number" value="{{ old('flight_number') }}"> --}}
+                           <input type="text" class="form-control fw-bold" id="flight_number" name="flight_number" @isset($request) value=" {{ old('flight_number', $request->input('flight_number')) }} " @endisset>
+
                         </div>
                         <div class="mt-3 text-center">
                           <button type="submit" class="btn btn-primary">
@@ -45,21 +48,26 @@
 
                         <div class="form-group">
                             <label for="airline">Compagnie</label>
-                            <select class="form-control" id="compagnie" name="compagnie">
+                            <select class="form-control fw-bold" id="compagnie" name="compagnie">
                                 <option value="0" selected>select Compagnie</option>
                                 @foreach($compagnies as $company)
-                                    <option value="{{ $company->id }}">{{ $company->name }}</option>
+                                    <option value="{{ $company->id }}" @isset($request) {{ (old('compagnie', $request->input('compagnie')) == $company->id) ? 'selected' : '' }}@endisset>
+                                        {{ $company->name }}
+                                    </option>
                                 @endforeach
                             </select>
+
 
                         </div>
                         <div class="form-group">
 
                             <label for="airport">Aéroport</label>
-                            <select class="form-control" id="airport" name="airport">
+                            <select class="form-control fw-bold" id="airport" name="airport">
                                 <option value="0" selected>select Aéroport</option>
                                 @foreach($airports as $airport)
-                                    <option value="{{ $airport->id }}">{{ $airport->name }}</option>
+                                    <option  value="{{ $airport->id }}"  @isset($request) {{ (old('airport', $request->input('airport')) == $airport->id) ? 'selected' : '' }} @endisset>
+
+                                        {{ $airport->name }}</option>
                                 @endforeach
                             </select>
 
@@ -74,13 +82,13 @@
                 <div class="col-md-1"></div>
 
 
-                <div class="col-md-4 border border-dark rounded p-3">
+                <div class="col-md-4 border border-dark rounded p-3 ">
                     <form method="POST" action="{{ route('search-flight') }}">
                         @csrf
                         <div class="form-group">
                             <label for="provenance">SEARCH BY PROVENANCE OR DESTINATION</label>
-                            <select class="form-control" id="provenance" name="provenance">
-                                <option value="0" selected>select Compagnie</option>
+                            <select class="form-control fw-bold" id="provonance" name="provonance">
+                                <option value="0" selected>select  PROVENANCE OR DESTINATION</option>
                                 @foreach($province_destnation as $city)
                                     <option value="{{ $city->id }}">{{ $city->name }}</option>
                                 @endforeach
@@ -100,7 +108,7 @@
         </div>
     </div>
 
-  <div class="row" id="flight-container">
+  <div class="row" id="flight-container1">
     @if($customer_flights->count()>0)
       @foreach ($customer_flights as $flight)
     <div class="col-md-4 bg-secondary"  >
@@ -154,7 +162,10 @@
       </div>
     </div>
 
-  </div> <!-- end row -->
+  </div>
+  <div class="row" id="flight-container2">
+
+
 
 
 @endsection
@@ -169,21 +180,13 @@
 fetch(apiUrl)
 .then(response => response.json())
 .then(data => {
-// console.log(data.response);
-// console.log(data.response);
 
-// Process the retrieved data here
-// data.response.forEach(flight => {
-//     console.log(flight);
-//     counter++;
-
-// });
 const flightArray = [];
 
 for (let i = 0; i < Math.min(data.response.length, 3); i++) {
   const flight = data.response[i];
   flightArray.push(flight);
-  const flightContainer = document.getElementBy('flight-container'); // Assuming flight-container is the  of the container element where you want to append the flight card
+  const flightContainer = $('#flight-container2');
 
 const cardDiv = document.createElement('div');
 cardDiv.className = 'col-md-4 bg-warning';
@@ -213,7 +216,7 @@ cardDiv.innerHTML = `
 `;
 
 
-flightContainer.appendChild(cardDiv);
+flightContainer.append(cardDiv);
 
   console.log(flightArray);
 }

@@ -17,11 +17,12 @@ class FlightController extends Controller
 {
 
     // search flight
-    public function SearchFlightByNVol(Request $request, $num_vol = null, $compagnie = null, $aeroport = null)
+    public function SearchFlightByNVol(Request $request, $num_vol = null, $compagnie = null, $aeroport = null,$provonance=null)
     {
         $flightNumber = $request->input('flight_number');
         $flightCmp = $request->input('compagnie');
         $flightAeoropt = $request->input('airport');
+        $provonance=$request->input('provonance');
 
         //  dd($flightCmp);
 
@@ -29,33 +30,44 @@ class FlightController extends Controller
         if ($flightNumber) {
             // Search flight by flight number
             $customer_flights = Flight::where('flight_number', $flightNumber)->paginate(1);
-        } else if ($flightCmp || $flightAeoropt) {
+        }
+        else if ($flightCmp || $flightAeoropt) {
             // Search flight by company/compagnie
             $customer_flights = Flight::where('airline_id', $flightCmp)
             ->orWhere('origin_id', $flightAeoropt)
             ->orWhere('destination_id', $flightAeoropt)
-            ->paginate(3);
+            ->paginate(6);
         }
-        // else if ($province) {
-        //     // Search flight by airport/aeroport
-        //     $customer_flights = Flight::where('', $flightAeoropt)
-        //     ->orWhere('destination_id', $flightAeoropt)
-        //     ->paginate(3);
+        else if($provonance){
+            $airport = Airport::where(function ($query) use ($provonance) {
+                $query->whereHas('city', function ($query) use ($provonance) {
+                    $query->where('id', $provonance);
+                });
+            })->get();
 
-        // }
+             $airportId=$airport->pluck('id')->toArray();
+
+             $customer_flights = Flight::whereIn('origin_id', $airportId)
+             ->orWhereIn('destination_id', $airportId)
+
+             ->paginate(6);
+
+        }
+
+
         else {
             // No search inputs provided, return all flights
-            $customer_flights = Flight::paginate(3);
+            $customer_flights = Flight::paginate(6);
         }
 
-        return view('customer.flights', compact('customer_flights'))->withInput($request->input());
+        return view('customer.flights', compact('customer_flights'))->withInput($request->input())->with(['request' => $request]);
     }
 
 
 
     // customer_flights
     public function customer_flights(Request $request){
-        $customer_flights= Flight::paginate(3);
+        $customer_flights= Flight::paginate(6);
 
 
     return view('customer.flights', compact('customer_flights'));
@@ -154,7 +166,8 @@ class FlightController extends Controller
                 "arrival" => $validated['arrival'],
                 "seats" => $plane->capacity,
                 "remain_seats" => $plane->capacity,
-                "status" => 1,
+                // par defaut programmé
+                "status_id" => 3,
                 "price" => $validated['price'],
             ]);
 
