@@ -74,7 +74,7 @@ Route::group(["prefix" => 'dashboard'], function () {
     });
 });
 
-Route::view('/', 'index');
+Route::view('/','auth.login');
 
 //Language Translation
 Route::get('/index/{locale}', [HomeController::class, 'lang']);
