@@ -20,7 +20,7 @@ use App\Http\Controllers\SidebarControler;
 /*-------------New Part----------------*/
 
 // get all flights in users
-Route::get('/customer_flights', [FlightController::class, 'customer_flights'])->middleware('auth')->name('customer_flights');
+Route::get('/customer_flights', [FlightController::class, 'customer_flights'])->middleware('auth')->name('customer.flights');
 // search flight
 Route::post('search_flights/{NumVol?}/{compagnie?}/{aeroport?}/{provonance?}', [FlightController::class, 'SearchFlightByNVol'])
     ->middleware('auth')
@@ -77,8 +77,8 @@ Route::group(["prefix" => 'dashboard'], function () {
 
 Route::view('/', 'index');
 
-//Language Translation
-Route::get('/index/{locale}', [HomeController::class, 'lang']);
+Route::view('/', 'index');
+
 
 Route::post('/store-temp-file', [HomeController::class, 'storeTempFile'])->name('storeTempFile');
 Route::post('/delete-temp-file', [HomeController::class, 'deleteTempFile'])->name('deleteTempFile');
