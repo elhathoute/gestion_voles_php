@@ -70,11 +70,18 @@ Route::group(["prefix" => 'dashboard'], function () {
             //customers
             Route::get("customers", [CustomerController::class, "index"])->name('customers.index');
             Route::get("customers/{user}", [CustomerController::class, "show"])->name('customers.show');
+
+
+            Route::get("report", function () {
+                return view('layouts.report');
+            })->name('report');
         });
     });
 });
 
-Route::view('/','index');
+
+Route::view('/', 'auth.login');
+
 
 //Language Translation
 Route::get('/index/{locale}', [HomeController::class, 'lang']);
