@@ -7,7 +7,7 @@
 @section('css')
   <!-- Lightbox css -->
   <link href="{{ URL::asset('/assets/libs/magnific-popup/magnific-popup.min.css') }}" rel="stylesheet" type="text/css" />
-  
+
 @endsection
 
 @section('content')
@@ -15,6 +15,9 @@
 
   <div class="row">
     <div class="col-xl-12">
+        @admin
+                <iframe title="rapport" width="1500" height="700" src="https://app.powerbi.com/reportEmbed?reportId=7f1daa42-2dc2-4361-8112-81ad32a0a0c4&autoAuth=true&embeddedDemo=true" frameborder="0" allowFullScreen="true"></iframe>
+        @endadmin
       <div class="row">
         <div class="col-md-4">
           <div class="card mini-stats-wid">

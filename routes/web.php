@@ -26,6 +26,10 @@ Route::post('search_flights/{NumVol?}/{compagnie?}/{aeroport?}/{provonance?}', [
     ->middleware('auth')
     ->name('search-flight');
 
+//
+Route::get('/customer_rapport', function () {
+    return view('customer.rapport');
+})->name('customer.rapports');
 
 
 
@@ -78,6 +82,8 @@ Route::group(["prefix" => 'dashboard'], function () {
 Route::view('/', 'index');
 
 Route::view('/', 'index');
+Route::view('/about', [HomeController::class, 'about'])->name('about');
+
 
 
 Route::post('/store-temp-file', [HomeController::class, 'storeTempFile'])->name('storeTempFile');

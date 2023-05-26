@@ -81,6 +81,12 @@
               <span key="t-contact">@lang('sidebar.flights')</span>
             </a>
           </li>
+          <li>
+            <a href="{{ route('customer.rapports') }}" class="waves-effect">
+              <i class="bx bxs-plane-take-off"></i>
+              <span key="t-contact">rapports</span>
+            </a>
+          </li>
 
 
         @endadmin

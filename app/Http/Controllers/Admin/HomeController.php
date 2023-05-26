@@ -31,6 +31,11 @@ class HomeController extends Controller
         return abort(404);
     }
 
+    public function about()
+    {
+        return view('about');
+    }
+
     public function root()
     {
         $totalAirline = Airline::count();
