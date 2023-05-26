@@ -29,46 +29,7 @@
 
     <div class="d-flex">
 
-      <div class="dropdown d-none d-lg-inline-block ms-1">
-        <button type="button" class="btn header-item noti-icon waves-effect" data-toggle="fullscreen" onclick="toggleScreen()">
-          <i class="bx bx-fullscreen"></i>
-        </button>
-        <script>
-          function toggleScreen() {
-            var elem = document.documentElement;
-            if (!window.screenTop && !window.screenY) {
-              openFullscreen();
-            } else {
-              closeFullscreen();
-            }
-            /* View in fullscreen */
-            function openFullscreen() {
-              if (elem.requestFullscreen) {
-                elem.requestFullscreen();
-              } else if (elem.webkitRequestFullscreen) {
-                /* Safari */
-                elem.webkitRequestFullscreen();
-              } else if (elem.msRequestFullscreen) {
-                /* IE11 */
-                elem.msRequestFullscreen();
-              }
-            }
-
-            /* Close fullscreen */
-            function closeFullscreen() {
-              if (document.exitFullscreen) {
-                document.exitFullscreen();
-              } else if (document.webkitExitFullscreen) {
-                /* Safari */
-                document.webkitExitFullscreen();
-              } else if (document.msExitFullscreen) {
-                /* IE11 */
-                document.msExitFullscreen();
-              }
-            }
-          }
-        </script>
-      </div>
+     
       @php
     $notificationData = app(\App\Http\Controllers\Auth\RegisterController::class)->notification();
     $notification = json_decode($notificationData, true);

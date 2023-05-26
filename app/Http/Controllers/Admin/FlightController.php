@@ -9,12 +9,35 @@ use App\Models\Flight;
 use App\Models\Airline;
 use App\Models\Airport;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\FlightRequest;
 use Illuminate\Support\Facades\Validator;
 
 class FlightController extends Controller
 {
+    // cancel flight
+    public function flight_canceled(Request $request,$id=null){
+        $flight_id=$id;
+        $raison_annulation=$request['raison_annulation'];
+
+        DB::table('vol_annule')->insert([
+            'flight_id' => $flight_id,
+            'raison_annulation' => $raison_annulation,
+        ]);
+        return back();
+    }
+    // delay
+    public function flight_delay(Request $request,$id=null){
+        $flight_id=$id;
+        $duree_retard=$request['duree_retard'];
+
+        DB::table('vol_retarde')->insert([
+            'flight_id' => $flight_id,
+            'duree_retard' => $duree_retard,
+        ]);
+        return back();
+    }
 
     // search flight
     public function SearchFlightByNVol(Request $request, $num_vol = null, $compagnie = null, $aeroport = null,$provonance=null)
@@ -105,7 +128,7 @@ class FlightController extends Controller
             $plane = Plane::find($validated['plane_id']);
 
             Flight::create([
-                "flight_number" => rand(1000, 9999),
+                "flight_number" =>$validated['flight_number'],
                 "airline_id" => $validated['airline_id'],
                 "plane_id" => $validated['plane_id'],
                 "origin_id" => $validated['origin_id'],
@@ -147,7 +170,7 @@ class FlightController extends Controller
             $plane = Plane::find($validated['plane_id']);
 
             $flight->update([
-                "flight_number" => rand(1000, 9999),
+                "flight_number" =>$validated['flight_number'],
                 "airline_id" => $validated['airline_id'],
                 "plane_id" => $validated['plane_id'],
                 "origin_id" => $validated['origin_id'],
@@ -156,7 +179,7 @@ class FlightController extends Controller
                 "arrival" => $validated['arrival'],
                 "seats" => $plane->capacity,
                 "remain_seats" => $plane->capacity,
-                "status" => 1,
+                "status_id" => $validated['status_id'],
                 "price" => $validated['price'],
             ]);
 

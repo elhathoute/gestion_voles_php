@@ -16,7 +16,7 @@
 <!-- App js -->
 <script src="{{ URL::asset('assets/js/app.min.js') }}"></script>
 
-{{-- sweetalert2 message --}}
+sweetalert2 message
 @if (Session::has('message'))
   <script>
     Swal.fire({

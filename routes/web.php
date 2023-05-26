@@ -64,7 +64,10 @@ Route::group(["prefix" => 'dashboard'], function () {
 
             //flights
             Route::get("flights/get-planes-by-airline", [FlightController::class, 'getPlanesByAirline'])->name('flights.getPlanesByAirline');
+
             Route::resource("flights", FlightController::class)->except('show');
+            Route::post("flight/canceled/{id}", [FlightController::class,'flight_canceled'])->name('flights.canceled');
+            Route::post("flight/delay/{id}", [FlightController::class,'flight_delay'])->name('flights.delay');
 
 
             //customers
