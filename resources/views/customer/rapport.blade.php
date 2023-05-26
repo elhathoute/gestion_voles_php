@@ -1,6 +1,7 @@
 @extends('layouts.master')
 
 @section('content')
+@if(auth()->user()->is_admin==0)
 <section class="classes mt-5">
         <div class="classes-description mb-5">
         <h2>Our Records</h2>
@@ -22,4 +23,5 @@
         @endforeach
         </div>
     </section>
+    @endif
 @endsection
