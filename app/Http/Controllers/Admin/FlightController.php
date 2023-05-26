@@ -75,70 +75,18 @@ class FlightController extends Controller
 
     }
     //  end customer_flights
-    public function index(Request $request)
+    public function index()
     {
-        if ($request->ajax()) {
-            $data = Flight::query();
-            return Datatables::of($data)->addIndexColumn()
-                ->setRowClass(fn ($row) => 'align-middle')
-                ->addColumn('action', function ($row) {
-                    $td = '<td>';
-                    $td .= '<div class="d-flex">';
-                    $td .= '<a href="' . route('flights.edit', $row->id) . '" type="button" class="btn btn-sm btn-info waves-effect waves-light me-1">' . __('buttons.edit') . '</a>';
-                    $td .= '<a href="javascript:void(0)" data-id="' . $row->id . '" data-url="' . route('flights.destroy', $row->id) . '"  class="btn btn-sm btn-danger delete-btn">' . __('buttons.delete') . '</a>';
-                    $td .= "</div>";
-                    $td .= "</td>";
-                    return $td;
-                })
-                ->editColumn('flight_info', function ($row) {
-                    $td = '<td>';
-                    $td .= '<div class="">';
-                    $td .= '<p class="fw-bold">' . __('translation.flight.flight_number') . ': <span class="fw-normal">' . $row->flight_number . '</span></p>';
-                    $td .= '<p class="fw-bold">' . __('translation.flight.plane_code') . ': <span class="fw-normal">' . $row->plane->code . '</span></p>';
-                    $td .= '<p class="fw-bold">' . __('translation.flight.airline') . ': <span class="fw-normal">' . $row->airline->name . '</span></p>';
-                    $td .= '<p class="fw-bold">' . __('translation.flight.price') . ': <span class="fw-normal">' . formatPrice($row->price) . '</span></p>';
-                    $td .= "</div>";
-                    $td .= "</td>";
-                    return $td;
-                })
-                ->editColumn('route', function ($row) {
-                    $td = '<td>';
-                    $td .= '<div class="">';
-                    $td .= '<p class="fw-bold">' . __('translation.flight.origin') . ': <span class="fw-normal">' . airportName($row->origin->name) . '</span></p>';
-                    $td .= '<p class="fw-bold">' . __('translation.flight.destination') . ': <span class="fw-normal">' . airportName($row->destination->name) . '</span></p>';
-                    $td .= "</div>";
-                    $td .= "</td>";
-                    return $td;
-                })
-                ->editColumn('time', function ($row) {
-                    $td = '<td>';
-                    $td .= '<div class="">';
-                    $td .= '<p class="fw-bold">' . __('translation.flight.departure') . ': <span class="fw-normal">' . formatDateWithTimezone($row->departure) . '</span></p>';
-                    $td .= '<p class="fw-bold">' . __('translation.flight.arrival') . ': <span class="fw-normal">' . formatDateWithTimezone($row->arrival) . '</span></p>';
-                    $td .= "</div>";
-                    $td .= "</td>";
-                    return $td;
-                })
-                ->editColumn('capacity', function ($row) {
-                    $td = '<td>';
-                    $td .= '<div class="">';
-                    $td .= '<p class="fw-bold">' . __('translation.flight.seats') . ': <span class="fw-normal">' . $row->seats . '</span></p>';
-                    $td .= '<p class="fw-bold">' . __('translation.flight.remain_seats') . ': <span class="fw-normal">' . $row->remain_seats . '</span></p>';
-                    $td .= "</div>";
-                    $td .= "</td>";
-                    return $td;
-                })
-                ->editColumn('status', function ($row) {
-                    return $row->status
-                        ? '<i class="bx bxs-plane-take-off text-success bx-sm"></i>'
-                        : '<i class="bx bxs-plane-land text-danger bx-sm"></i>';
-                })
-                ->rawColumns(['flight_info', 'route', 'time', 'capacity', 'status', 'action'])
-                ->make(true);
-        }
+        $flights = Flight::with('airline:id,name')
+            ->with('plane:id,code')
+            ->with('origin:id,name')
+            ->with('destination:id,name')
+            ->with('status:id')
+            ->get();
 
-        return view('admin.flights.index');
+        return view('admin.flights.index', compact('flights'));
     }
+
 
     public function create()
     {
