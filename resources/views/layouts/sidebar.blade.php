@@ -52,6 +52,20 @@
               <span key="t-contact">Customers</span>
             </a>
           </li>
+
+          <li class="{{ request()->routeIs('customers.*') ? 'mm-active' : '' }}">
+            <a href="{{ route('customers.index') }}" class="waves-effect">
+              <i class='bx bxs-x-square'></i>
+              <span key="t-contact">CanceledFlight</span>
+            </a>
+          </li>
+
+          <li class="{{ request()->routeIs('customers.*') ? 'mm-active' : '' }}">
+            <a href="{{ route('customers.index') }}" class="waves-effect">
+              <i class='bx bx-time-five'></i>
+              <span key="t-contact">DelayFlight</span>
+            </a>
+          </li>
         @else
           {{-- USER ROUTES  --}}
           <li>
@@ -60,34 +74,15 @@
               <span key="t-contact">@lang('sidebar.my_profile')</span>
             </a>
           </li>
-          {{-- search --}}
-          {{-- <li>
-            <a href="{{ route('profile') }}" class="waves-effect">
-              <i class="bx bx-search"></i>
-              <span key="t-contact">@lang('sidebar.search_flight')</span>
-            </a>
-          </li> --}}
-        {{-- All flights --}}
+
         <li>
-            <a href="{{ route('customer_flights') }}" class="waves-effect">
+            <a href="{{ route('customer.flights') }}" class="waves-effect">
               <i class="bx bxs-plane-take-off"></i>
               <span key="t-contact">@lang('sidebar.flights')</span>
             </a>
           </li>
-          {{--  --}}
-          {{-- <li>
-            <a href="{{ route('tickets.flights') }}" class="waves-effect">
-              <i class="bx bx-credit-card"></i>
-              <span>@lang('sidebar.book_ticket')</span>
-            </a>
-          </li> --}}
 
-          {{-- <li>
-            <a href="{{ route('tickets.userTickets') }}" class="waves-effect">
-              <i class="bx bx-credit-card"></i>
-              <span>@lang('sidebar.my_tickets')</span>
-            </a>
-          </li> --}}
+
         @endadmin
 
       </ul>
