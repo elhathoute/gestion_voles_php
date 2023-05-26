@@ -53,7 +53,7 @@
             </a>
           </li>
 
-          <li class="{{ request()->routeIs('customers.*') ? 'mm-active' : '' }}">
+          {{-- <li class=" ">
             <a href="{{ route('customers.index') }}" class="waves-effect">
               <i class='bx bxs-x-square'></i>
               <span key="t-contact">CanceledFlight</span>
@@ -65,7 +65,7 @@
               <i class='bx bx-time-five'></i>
               <span key="t-contact">DelayFlight</span>
             </a>
-          </li>
+          </li> --}}
         @else
           {{-- USER ROUTES  --}}
           <li>
