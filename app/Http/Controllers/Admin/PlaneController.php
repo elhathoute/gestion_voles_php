@@ -11,36 +11,11 @@ use DataTables;
 
 class PlaneController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
-        if ($request->ajax()) {
-            $data = Plane::query()
-                ->with('airline:id,name');
-            return Datatables::of($data)->addIndexColumn()
-                ->setRowClass(fn ($row) => 'align-middle')
-                ->addColumn('action', function ($row) {
-                    $td = '<td>';
-                    $td .= '<div class="d-flex">';
-                    $td .= '<a href="' . route('planes.edit', $row->id) . '" type="button" class="btn btn-sm  btn-info waves-effect waves-light me-1">' . __('buttons.edit') . '</a>';
-                    $td .= '<a href="javascript:void(0)" data-id="' . $row->id . '" data-url="' . route('planes.destroy', $row->id) . '"  class="btn btn-sm  btn-danger delete-btn">' . __('buttons.delete') . '</a>';
-                    $td .= "</div>";
-                    $td .= "</td>";
-                    return $td;
-                })
-                ->editColumn('created_at', function ($row) {
-                    return formatDate($row->created_at);
-                })
-                ->editColumn('code', function ($row) {
-                    return '<span class="badge badge-pill badge-soft-info font-size-14">' . $row->code . '</span>';
-                })
-                ->editColumn('capacity', function ($row) {
-                    return '<span class="badge badge-pill badge-soft-info font-size-14">' . $row->capacity . '</span>';
-                })
-                ->rawColumns(['action', 'code', 'capacity'])
-                ->make(true);
-        }
+        $planes = Plane::with('airline:id,name')->get();
 
-        return view('admin.planes.index');
+        return view('admin.planes.index', compact('planes'));
     }
 
     public function create()

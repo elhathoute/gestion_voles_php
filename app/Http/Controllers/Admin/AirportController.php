@@ -13,31 +13,13 @@ use DataTables;
 
 class AirportController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
-        if ($request->ajax()) {
-            $data = Airport::query();
-            return Datatables::of($data)->addIndexColumn()
-                ->setRowClass(fn ($row) => 'align-middle')
-                ->addColumn('action', function ($row) {
-                    $td = '<td>';
-                    $td .= '<div class="d-flex">';
-                    $td .= '<a href="' . route('airports.edit', $row->id) . '" type="button" class="btn btn-sm  btn-info waves-effect waves-light me-1">' . __('buttons.edit') . '</a>';
-                    $td .= '<a href="javascript:void(0)" data-id="' . $row->id . '" data-url="' . route('airports.destroy', $row->id) . '"  class="btn btn-sm  btn-danger delete-btn">' . __('buttons.delete') . '</a>';
-                    $td .= "</div>";
-                    $td .= "</td>";
-                    return $td;
-                })
-                ->editColumn('city.name', function ($row) {
-                    return '<span class="badge badge-pill badge-soft-info font-size-14">' . $row->city->name . '</span>';
-                })
-                ->editColumn('created_at', fn ($row) => formatDate($row->created_at))
-                ->rawColumns(['action', 'city.name'])
-                ->make(true);
-        }
+        $airports = Airport::with('city')->get();
 
-        return view('admin.airports.index');
+        return view('admin.airports.index', compact('airports'));
     }
+
 
     public function create()
     {
@@ -102,7 +84,7 @@ class AirportController extends Controller
         // query to get the data from the table
         $query = Airport::all();
 
-        // create file name  
+        // create file name
         $fileName = "airport_export_" .  date('Y-m-d_h:i_a') . ".xlsx";
 
         return Excel::download(new GeneralExport($query, $headers), $fileName);
@@ -116,7 +98,7 @@ class AirportController extends Controller
         // import to database
         Excel::import(new AirportsImport, $filePath);
 
-        // delete temp file after uploading 
+        // delete temp file after uploading
         unlink($filePath);
 
         return redirect()->route('airports.index')->with([

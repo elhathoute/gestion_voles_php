@@ -10,7 +10,7 @@
 @endsection
 
 @section('content')
- 
+
 
   <div class="row">
     <div class="col-xl-12">
@@ -86,7 +86,7 @@
   <div class="row">
     <div class="col-xl-12">
       <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-3">
           <div class="card mini-stats-wid">
             <div class="card-body">
               <div class="d-flex">
@@ -107,7 +107,7 @@
           </div>
         </div>
 
-        <div class="col-md-4">
+        <div class="col-md-3">
           <div class="card mini-stats-wid">
             <div class="card-body">
               <div class="d-flex">
@@ -127,6 +127,101 @@
             </div>
           </div>
         </div>
+
+        <div class="col-md-3">
+            <div class="card mini-stats-wid">
+              <div class="card-body bg-danger">
+                <div class="d-flex">
+                  <div class="flex-grow-1">
+                    <p class="text-white fw-medium">TotalFlightAnnuler</p>
+                    <h4 class=" text-white mb-0">{{ $data['totalFlightAnnuler'] }}</h4>
+                  </div>
+
+                  <div class="align-self-center flex-shrink-0">
+                    <div class="avatar-sm rounded-circle bg-primary mini-stat-icon">
+                      <span class="avatar-title rounded-circle bg-primary">
+                        <i class="bx bxs-plane-alt font-size-24"></i>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-3 ">
+            <div class="card mini-stats-wid">
+              <div class="card-body bg-warning">
+                <div class="d-flex">
+                  <div class="flex-grow-1">
+                    <p class="text-white fw-medium">TotalFlightRetarder</p>
+                    <h4 class="text-white mb-0">{{ $data['totalFlightRetarder'] }}</h4>
+                  </div>
+
+                  <div class="align-self-center flex-shrink-0">
+                    <div class="avatar-sm rounded-circle bg-primary mini-stat-icon">
+                      <span class="avatar-title rounded-circle bg-primary">
+                        <i class="bx bxs-plane-alt font-size-24"></i>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6 ">
+            <div class="card mini-stats-wid">
+              <div class="card-body ">
+                <div class="d-flex">
+                  <div class="flex-grow-1">
+                    <p class="text-black fw-medium ">List FlightRetarder :</p>
+                    @php
+                        $totalFlightRetards= DB::table('vol_retarde')->get();
+                    @endphp
+                    @foreach ($totalFlightRetards as $totalFlightRetard )
+                    @php
+                        $FlightN = App\Models\Flight::where('id', $totalFlightRetard->flight_id)->pluck('flight_number')->first();
+                    @endphp
+                    <p class=" mb-0">FlightN° : <span class="fw-bold">{{$FlightN}}</span></p>
+                    <p class=" mb-0">DurationDelay : <span class="fw-bold">{{ $totalFlightRetard->duree_retard}}</span></p>
+                    <hr>
+                    @endforeach
+
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6 ">
+            <div class="card mini-stats-wid">
+              <div class="card-body ">
+                <div class="d-flex">
+                  <div class="flex-grow-1">
+                    <p class="text-black fw-medium ">List FlightAnnuler :</p>
+                    @php
+                        $totalFlightAnnuls= DB::table('vol_annule')->get();
+                    @endphp
+                    @foreach ($totalFlightAnnuls as $totalFlightAnnul )
+                    @php
+                        $FlightN = App\Models\Flight::where('id', $totalFlightAnnul->flight_id)->pluck('flight_number')->first();
+                    @endphp
+                    <p class=" mb-0">FlightN° : <span class="fw-bold">{{$FlightN}} </span></p>
+                    <p class=" mb-0">CancellationReason : <span class="fw-bold"> {{ $totalFlightAnnul->raison_annulation}}</span></p>
+                    <hr>
+                    @endforeach
+
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+
       </div>
 
     </div>
