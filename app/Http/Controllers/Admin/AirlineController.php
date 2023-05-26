@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\Airline;
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Http\Requests\AirlineRequest;
 use DataTables;
+use App\Models\Plane;
+use App\Models\Airline;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\AirlineRequest;
 
 class AirlineController extends Controller
 {
@@ -43,7 +44,7 @@ class AirlineController extends Controller
         //         ->rawColumns(['action', 'image', 'planes_count'])
         //         ->make(true);
         // }
-        
+
         $airlines = Airline::withCount('planes')->get();
 
         // return view('your-view', compact('data'));
@@ -84,35 +85,11 @@ class AirlineController extends Controller
 
     public function show(Request $request, Airline $airline)
     {
-        $airline->load('planes');
+        $planes = Plane::where('airline_id', $airline->id)->get();
 
-        if ($request->ajax()) {
-            return Datatables::of($airline->planes)->addIndexColumn()
-                ->setRowClass(fn ($row) => 'align-middle')
-                ->addColumn('action', function ($row) {
-                    $td = '<td>';
-                    $td .= '<div class="d-flex">';
-                    $td .= '<a href="' . route('planes.edit', $row->id) . '" type="button" class="btn btn-sm  btn-info waves-effect waves-light me-1">' . __('buttons.edit') . '</a>';
-                    $td .= '<a href="javascript:void(0)" data-id="' . $row->id . '" data-url="' . route('planes.destroy', $row->id) . '"  class="btn btn-sm  btn-danger delete-btn">' . __('buttons.delete') . '</a>';
-                    $td .= "</div>";
-                    $td .= "</td>";
-                    return $td;
-                })
-                ->editColumn('created_at', function ($row) {
-                    return formatDate($row->created_at);
-                })
-                ->editColumn('code', function ($row) {
-                    return '<span class="badge badge-pill badge-soft-info font-size-14">' . $row->code . '</span>';
-                })
-                ->editColumn('capacity', function ($row) {
-                    return '<span class="badge badge-pill badge-soft-info font-size-14">' . $row->capacity . '</span>';
-                })
-                ->rawColumns(['action', 'code', 'capacity'])
-                ->make(true);
-        }
-
-        return view('admin.airlines.show', compact('airline'));
+        return view('admin.airlines.show', compact('airline', 'planes'));
     }
+
 
     public function edit(Airline $airline)
     {

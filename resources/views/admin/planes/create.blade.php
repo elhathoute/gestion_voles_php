@@ -1,21 +1,11 @@
 @extends('layouts.master')
 
 @section('title')
-  @lang('translation.add_resource', ['resource' => __('attributes.plane')])
+  Add Plane
 @endsection
 
 @section('content')
-  @component('components.breadcrumb')
-    @slot('li_1')
-      @lang('translation.plane.plane')
-    @endslot
-    @slot('li_2')
-      {{ route('planes.index') }}
-    @endslot
-    @slot('title')
-      @lang('translation.add_resource', ['resource' => __('attributes.plane')])
-    @endslot
-  @endcomponent
+
 
   <div class="row">
     <div class="col-xl-12">
@@ -36,58 +26,58 @@
               <div class="col-8">
 
                 <div class="row mb-4">
-                  <label for="name" class="col-sm-3 col-form-label">@lang('translation.plane.name')</label>
+                  <label for="name" class="col-sm-3 col-form-label">Name</label>
                   <div class="col-sm-9">
                     <input type="text" class="form-control" id="name" name="name" value="{{ old('name') }}" required>
                     <div class="valid-feedback">
-                      @lang('validation.good')
+                      Valid.
                     </div>
                     <div class="invalid-feedback">
-                      @lang('validation.required', ['attribute' => __('translation.plane.name')])
+                      Name is required.
                     </div>
                   </div>
                 </div>
-                
+
                 <div class="row mb-4">
-                  <label for="airline" class="col-sm-3 col-form-label">@lang('translation.plane.airline')</label>
+                  <label for="airline" class="col-sm-3 col-form-label">Airline</label>
                   <div class="col-sm-9">
                     <select class="form-control select2" id="airline" name="airline_id" required>
-                      <option value="">@lang('translation.none')</option>
+                      <option value="">None</option>
                       @foreach ($airlines as $key => $value)
                         <option value="{{ $key }}"  @selected($key === old('airline_id'))>{{ $value }}</option>
                       @endforeach
                     </select>
                     <div class="valid-feedback">
-                      @lang('validation.good')
+                      Valid.
                     </div>
                     <div class="invalid-feedback">
-                      @lang('validation.required', ['attribute' => __('translation.user.airline')])
+                      Airline is required.
                     </div>
                   </div>
                 </div>
 
                 <div class="row mb-4">
-                  <label for="code" class="col-sm-3 col-form-label">@lang('translation.plane.code')</label>
+                  <label for="code" class="col-sm-3 col-form-label">Code</label>
                   <div class="col-sm-9">
                     <input type="text" class="form-control" id="code" name="code" value="{{ old('code') }}" required>
                     <div class="valid-feedback">
-                      @lang('validation.good')
+                      Valid.
                     </div>
                     <div class="invalid-feedback">
-                      @lang('validation.required', ['attribute' => __('translation.plane.code')])
+                      Code is required.
                     </div>
                   </div>
                 </div>
 
                 <div class="row mb-4">
-                  <label for="capacity" class="col-sm-3 col-form-label">@lang('translation.plane.capacity')</label>
+                  <label for="capacity" class="col-sm-3 col-form-label">Capacity</label>
                   <div class="col-sm-9">
                     <input type="number" min="80" max="300" class="form-control" id="capacity" name="capacity" value="{{ old('capacity') }}" required>
                     <div class="valid-feedback">
-                      @lang('validation.good')
+                      Valid.
                     </div>
                     <div class="invalid-feedback">
-                      @lang('validation.required', ['attribute' => __('translation.plane.capacity')])
+                      Capacity is required.
                     </div>
                   </div>
                 </div>
@@ -95,7 +85,7 @@
                 <div class="row justify-content-end">
                   <div class="col-sm-9">
                     <div>
-                      <button class="btn btn-primary" type="submit">@lang('buttons.submit')</button>
+                      <button class="btn btn-primary" type="submit">Submit</button>
                     </div>
                   </div>
                 </div>
