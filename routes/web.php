@@ -20,7 +20,7 @@ use App\Http\Controllers\SidebarControler;
 /*-------------New Part----------------*/
 
 // get all flights in users
-Route::get('/customer_flights', [FlightController::class, 'customer_flights'])->middleware('auth')->name('customer.flights');
+Route::get('/customer_flights', [FlightController::class, 'customer_flights'])->middleware('auth')->name('customer_flights');
 // search flight
 Route::post('search_flights/{NumVol?}/{compagnie?}/{aeroport?}/{provonance?}', [FlightController::class, 'SearchFlightByNVol'])
     ->middleware('auth')
@@ -70,19 +70,11 @@ Route::group(["prefix" => 'dashboard'], function () {
             //customers
             Route::get("customers", [CustomerController::class, "index"])->name('customers.index');
             Route::get("customers/{user}", [CustomerController::class, "show"])->name('customers.show');
-            Route::get("customers/delete/{user}", [CustomerController::class, "delete"])->name('customers.delete');
-
-
-            Route::get("report", function () {
-                return view('layouts.report');
-            })->name('report');
         });
     });
 });
 
-
 Route::view('/', 'auth.login');
-
 
 //Language Translation
 Route::get('/index/{locale}', [HomeController::class, 'lang']);
