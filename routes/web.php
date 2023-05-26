@@ -26,6 +26,10 @@ Route::post('search_flights/{NumVol?}/{compagnie?}/{aeroport?}/{provonance?}', [
     ->middleware('auth')
     ->name('search-flight');
 
+//
+Route::get('/customer_rapport', function () {
+    return view('customer.rapport');
+})->name('customer.rapports');
 
 
 
@@ -73,12 +77,6 @@ Route::group(["prefix" => 'dashboard'], function () {
             //customers
             Route::get("customers", [CustomerController::class, "index"])->name('customers.index');
             Route::get("customers/{user}", [CustomerController::class, "show"])->name('customers.show');
-            Route::get("customers/delete/{user}", [CustomerController::class, "delete"])->name('customers.delete');
-
-
-            Route::get("report", function () {
-                return view('layouts.report');
-            })->name('report');
         });
     });
 });
@@ -86,9 +84,10 @@ Route::group(["prefix" => 'dashboard'], function () {
 
 Route::view('/', 'index');
 
+Route::view('/', 'index');
+Route::view('/about', [HomeController::class, 'about'])->name('about');
 
-//Language Translation
-Route::get('/index/{locale}', [HomeController::class, 'lang']);
+
 
 Route::post('/store-temp-file', [HomeController::class, 'storeTempFile'])->name('storeTempFile');
 Route::post('/delete-temp-file', [HomeController::class, 'deleteTempFile'])->name('deleteTempFile');

@@ -1,5 +1,7 @@
+@extends('layouts.master')
 
-<section class="classes">
+@section('content')
+<section class="classes mt-5">
         <div class="classes-description mb-5">
         <h2>Our Records</h2>
         <h3>find most used aerports around the world</h3>
@@ -7,7 +9,6 @@
         <?php
         $rapports = ["abu", "Bucharest", "damascus", "dubai"]; ?>
         <div class="container">
-        <iframe title="rapport" width="1500" height="700" src="https://app.powerbi.com/reportEmbed?reportId=7f1daa42-2dc2-4361-8112-81ad32a0a0c4&autoAuth=true&embeddedDemo=true" frameborder="0" allowFullScreen="true"></iframe>
         <h3 class="mt-3">Edition Mai 2023</h3>
         @foreach($rapports as $airport)
         <div class="card  my-3 p-4 px-2 w-100" style="width:18rem;" >
@@ -21,3 +22,4 @@
         @endforeach
         </div>
     </section>
+@endsection
