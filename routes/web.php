@@ -81,7 +81,7 @@ Route::group(["prefix" => 'dashboard'], function () {
 });
 
 
-Route::view('/', 'auth.login');
+Route::view('/', 'index');
 
 
 //Language Translation
