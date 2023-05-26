@@ -10,17 +10,7 @@
 @endsection
 
 @section('content')
-  @component('components.breadcrumb')
-    @slot('li_1')
-      Customers
-    @endslot
-    @slot('li_2')
-      {{ route('customers.index') }}
-    @endslot
-    @slot('title')
-      Customers List
-    @endslot
-  @endcomponent
+
 
   <div class="row">
     <div class="col-12">
@@ -33,12 +23,29 @@
                 <th>Name</th>
                 <th>Email</th>
                 <th>Phone</th>
-                <th>No Of Tickets</th>
-                <th> @lang('translation.created_at')</th>
-                <th> @lang('translation.actions')</th>
+                <th>Created At</th>
+                <th>Actions</th>
               </tr>
             </thead>
-            <tbody></tbody>
+            <tbody>
+              @foreach($data as $customer)
+              <tr>
+                <td>{{ $customer->id }}</td>
+                <td>{{ $customer->name }}</td>
+                <td>{{ $customer->email }}</td>
+                <td>{{ $customer->phone }}</td>
+                <td>{{ $customer->created_at }}</td>
+                <td>
+                  <div class="d-flex">
+                    <a href="{{ route('customers.show', $customer->id) }}" type="button" class="btn btn-sm btn-primary waves-effect waves-light me-1">View</a>
+                    <a href="{{ route('customers.delete', $customer->id) }}" onclick="return confirm('Are you sure to delete this user!')" type="button" class="btn btn-sm btn-danger waves-effect waves-light me-1">
+                        <i class="bx bxs-trash"></i>
+                     </a>
+                  </div>
+                </td>
+              </tr>
+              @endforeach
+            </tbody>
           </table>
 
         </div>
@@ -46,6 +53,7 @@
     </div> <!-- end col -->
   </div> <!-- end row -->
 @endsection
+
 @section('script')
   <!-- Required datatable js -->
   <script src="{{ URL::asset('/assets/libs/datatables/datatables.min.js') }}"></script>
@@ -54,74 +62,19 @@
   <script type="text/javascript">
     $(function() {
       let table = $('#datatable').DataTable({
-        processing: true,
-        serverSide: true,
-        lengthChange: true,
-        lengthMenu: [10, 20, 50, 100],
-        pageLength: 10,
-        scrollX: true,
-        order: [
-          [0, "desc"]
-        ],
-        // text transalations
-        language: {
-          search: "@lang('translation.search')",
-          lengthMenu: "@lang('translation.lengthMenu1') _MENU_ @lang('translation.lengthMenu2')",
-          processing: "@lang('translation.processing')",
-          info: "@lang('translation.infoShowing') _START_ @lang('translation.infoTo') _END_ @lang('translation.infoOf') _TOTAL_ @lang('translation.infoEntries')",
-          emptyTable: "@lang('translation.emptyTable')",
-          paginate: {
-            "first": "@lang('translation.paginateFirst')",
-            "last": "@lang('translation.paginateLast')",
-            "next": "@lang('translation.paginateNext')",
-            "previous": "@lang('translation.paginatePrevious')"
-          },
-        },
-        ajax: "{{ route('customers.index') }}",
+      });
 
-        columns: [{
-            data: 'id'
-          },
-          {
-            data: 'name'
-          },
-          {
-            data: 'email'
-          },
-          {
-            data: 'phone'
-          },
-          {
-            data: 'tickets_count',
-            searchable: false,
-          },
-          {
-            data: 'created_at',
-          },
-          {
-            data: 'action',
-            orderable: false,
-            searchable: false
-          },
-        ],
-      })
-
-      //init buttons
       new $.fn.dataTable.Buttons(table, {
         buttons: [{
           extend: 'colvis',
-          text: "@lang('translation.colvisBtn')"
+          text: "Column Visibility"
         }]
       });
 
-      //add buttons to action_btns
-      table.buttons().container()
-        .prependTo($('#action_btns'));
+      table.buttons().container().prependTo($('#action_btns'));
 
-      // select dropdown for change the page length
       $('.dataTables_length select').addClass('form-select form-select-sm');
 
-      // add margin top to the pagination and info 
       $('.dataTables_info, .dataTables_paginate').addClass('mt-3');
     });
   </script>

@@ -1,21 +1,10 @@
 @extends('layouts.master')
 
 @section('title')
-  @lang('translation.edit_resource', ['resource' => __('attributes.airport')])
+  Edit Airport
 @endsection
 
 @section('content')
-  @component('components.breadcrumb')
-    @slot('li_1')
-      @lang('translation.airport.airport')
-    @endslot
-    @slot('li_2')
-      {{ route('airports.index') }}
-    @endslot
-    @slot('title')
-      @lang('translation.edit_resource', ['resource' => __('attributes.airport')])
-    @endslot
-  @endcomponent
 
   <div class="row">
     <div class="col-xl-12">
@@ -37,32 +26,32 @@
               <div class="col-8">
 
                 <div class="row mb-4">
-                  <label for="name" class="col-sm-3 col-form-label">@lang('translation.airport.name')</label>
+                  <label for="name" class="col-sm-3 col-form-label">Name</label>
                   <div class="col-sm-9">
                     <input type="text" class="form-control" id="name" name="name" value="{{ old('name', $airport->name) }}" required>
                     <div class="valid-feedback">
-                      @lang('validation.good')
+                      Valid.
                     </div>
                     <div class="invalid-feedback">
-                      @lang('validation.required', ['attribute' => __('translation.airport.name')])
+                      Name is required.
                     </div>
                   </div>
                 </div>
-                
+
                 <div class="row mb-4">
-                  <label for="city" class="col-sm-3 col-form-label">@lang('translation.airport.city')</label>
+                  <label for="city" class="col-sm-3 col-form-label">City</label>
                   <div class="col-sm-9">
                     <select class="form-control select2" id="city" name="city_id" required>
-                      <option value="">@lang('translation.none')</option>
+                      <option value="">None</option>
                       @foreach ($cities as $key => $value)
                         <option value="{{ $key }}"  @selected($key === $airport->city_id)>{{ $value }}</option>
                       @endforeach
                     </select>
                     <div class="valid-feedback">
-                      @lang('validation.good')
+                      Valid.
                     </div>
                     <div class="invalid-feedback">
-                      @lang('validation.required', ['attribute' => __('translation.user.citie')])
+                      City is required.
                     </div>
                   </div>
                 </div>
@@ -70,15 +59,13 @@
                 <div class="row justify-content-end">
                   <div class="col-sm-9">
                     <div>
-                      <button class="btn btn-primary" type="submit">@lang('buttons.submit')</button>
+                      <button class="btn btn-primary" type="submit">Submit</button>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
           </form>
-
-
         </div>
       </div>
       <!-- end card -->
