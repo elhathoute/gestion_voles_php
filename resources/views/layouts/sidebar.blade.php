@@ -8,7 +8,7 @@
       <!-- Left Menu Start -->
       <ul class="metismenu list-unstyled" id="side-menu">
 
-        @admin
+        @if (auth()->user()->is_admin==1)
           <li>
             <a href="{{ route('root') }}" class="waves-effect">
               <i class="bx bx-home-circle"></i>
@@ -53,28 +53,16 @@
             </a>
           </li>
 
-          {{-- <li class=" ">
-            <a href="{{ route('customers.index') }}" class="waves-effect">
-              <i class='bx bxs-x-square'></i>
-              <span key="t-contact">CanceledFlight</span>
-            </a>
-          </li>
-
-          <li class="{{ request()->routeIs('customers.*') ? 'mm-active' : '' }}">
-            <a href="{{ route('customers.index') }}" class="waves-effect">
-              <i class='bx bx-time-five'></i>
-              <span key="t-contact">DelayFlight</span>
-            </a>
-          </li> --}}
-        @else
+        @elseif (auth()->user()->is_admin==2 || auth()->user()->is_admin==0)
           {{-- USER ROUTES  --}}
+
           <li>
             <a href="{{ route('profile') }}" class="waves-effect">
               <i class="bx bx-user-circle"></i>
               <span key="t-contact">@lang('sidebar.my_profile')</span>
             </a>
           </li>
-
+        @if(auth()->user()->is_admin==0)
         <li>
             <a href="{{ route('customer.flights') }}" class="waves-effect">
               <i class="bx bxs-plane-take-off"></i>
@@ -87,9 +75,21 @@
               <span key="t-contact">rapports</span>
             </a>
           </li>
+          @endif
+
+          @if(auth()->user()->is_admin==2)
+          <li>
+            <a href="{{ route('root') }}" class="waves-effect">
+              <i class="bx bx-home-circle"></i>
+              <span key="t-contact">@lang('sidebar.dashboard')</span>
+            </a>
+          </li>
 
 
-        @endadmin
+          @endif
+
+
+        @endif
 
       </ul>
     </div>

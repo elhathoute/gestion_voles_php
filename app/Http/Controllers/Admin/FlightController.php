@@ -55,6 +55,7 @@ class FlightController extends Controller
             $customer_flights = Flight::where('flight_number', $flightNumber)->paginate(1);
         }
         else if ($flightCmp || $flightAeoropt) {
+        
             // Search flight by company/compagnie
             $customer_flights = Flight::where('airline_id', $flightCmp)
             ->orWhere('origin_id', $flightAeoropt)
