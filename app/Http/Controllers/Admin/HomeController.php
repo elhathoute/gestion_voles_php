@@ -47,8 +47,8 @@ class HomeController extends Controller
             'totalPlane' => $totalPlane,
             'totalAirport' => $totalAirport,
             'totalFlight' => $totalFlight,
-            'totalFlightAnnuler'=>$totalFlightAnnuler,
-            'totalFlightRetarder'=>$totalFlightRetarder
+            'totalFlightAnnuler' => $totalFlightAnnuler,
+            'totalFlightRetarder' => $totalFlightRetarder
         ];
 
         return view('admin.index', compact('data'));
