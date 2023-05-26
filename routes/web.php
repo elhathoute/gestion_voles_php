@@ -77,6 +77,7 @@ Route::group(["prefix" => 'dashboard'], function () {
             //customers
             Route::get("customers", [CustomerController::class, "index"])->name('customers.index');
             Route::get("customers/{user}", [CustomerController::class, "show"])->name('customers.show');
+            Route::get("customers/delete/{user}", [CustomerController::class, "delete"])->name('customers.delete');
         });
     });
 });

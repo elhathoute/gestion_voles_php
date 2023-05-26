@@ -24,8 +24,8 @@
           <line class="line" y1="9" x2="27" y2="9" stroke="white" stroke-width="2" />
           <line class="line" y1="17" x2="11" y2="17" stroke="white" stroke-width="2" />
         </svg>
-        <div class="logo">
-          <img src="{{ asset('frontend/assets/logo.png') }}" alt="mind & body" style="width: 7rem" />
+        <div class="logo ">
+          <img src="{{ asset('frontend/assets/logo.png') }}" alt="mind & body" style="width: 7rem;" />
           {{-- <h1>SULAYMANIYAH INTERNATIONAL AIRPORT</h1> --}}
         </div>
         <div class="links">
@@ -108,15 +108,7 @@
 
   </div>
 
-  <footer>
-    <div>
-      <p>©
-        <script>
-          document.write(new Date().getFullYear())
-        </script> {{ config('app.name') }}. Crafted with ❤️
-      </p>
-    </div>
-  </footer>
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.1/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.1/ScrollTrigger.min.js"></script>
   <script src="{{ asset('frontend/script.js') }}"></script>
