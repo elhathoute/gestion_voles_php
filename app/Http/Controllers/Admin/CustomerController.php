@@ -11,9 +11,7 @@ class CustomerController extends Controller
 {
     public function index()
     {
-        $data = User::query()
-            ->customer()
-            ->get();
+        $data = User::where('is_admin','!=',1)->get();
 
         return view('admin.customers.index', compact('data'));
     }

@@ -49,7 +49,7 @@
                   <div class="col-sm-9">
                     <div class="row">
 
-                      <button class="btn btn-primary" type="submit">Submit</button>
+                      <button class="btn btn-primary m-2" type="submit">Submit</button>
 </form>
                     <form action="{{ route('customer.rapport.destroy') }}" method="POST">
                       @csrf

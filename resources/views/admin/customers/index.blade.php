@@ -24,6 +24,7 @@
                 <th>Email</th>
                 <th>Phone</th>
                 <th>Created At</th>
+                <th>Role</th>
                 <th>Actions</th>
               </tr>
             </thead>
@@ -36,6 +37,14 @@
                 <td>{{ $customer->phone }}</td>
                 <td>{{ $customer->created_at }}</td>
                 <td>
+
+                    @if ($customer->is_admin==0)
+                    Customer
+                    @elseif($customer->is_admin==2)
+                    AdminAirPlan
+                    @endif
+                </td>
+                <td>
                   <div class="d-flex">
                     <a href="{{ route('customers.show', $customer->id) }}" type="button" class="btn btn-sm btn-primary waves-effect waves-light me-1">View</a>
                     <a href="{{ route('customers.delete', $customer->id) }}" onclick="return confirm('Are you sure to delete this user!')" type="button" class="btn btn-sm btn-danger waves-effect waves-light me-1">
@@ -43,6 +52,7 @@
                      </a>
                   </div>
                 </td>
+
               </tr>
               @endforeach
             </tbody>

@@ -67,6 +67,6 @@ class RapportController extends Controller
                 unlink($file);
             }
         }
-        return redirect()->route('customer.rapports.index')->with('success', 'Rapports deleted successfully.');
+        return redirect()->back()->with('success', 'Rapports deleted successfully.');
     }
 }

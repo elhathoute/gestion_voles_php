@@ -49,7 +49,7 @@
           <li class="{{ request()->routeIs('customers.*') ? 'mm-active' : '' }}">
             <a href="{{ route('customers.index') }}" class="waves-effect">
               <i class='bx bx-user'></i>
-              <span key="t-contact">Customers</span>
+              <span key="t-contact">Users</span>
             </a>
           </li>
 

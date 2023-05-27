@@ -56,8 +56,4 @@ class User extends Authenticatable implements HasMedia
 
     // Relations
 
-    public function tickets()
-    {
-        return $this->hasMany(Ticket::class, 'user_id');
-    }
 }
