@@ -61,10 +61,13 @@
               <i class="bx bx-user-circle"></i>
               <span key="t-contact">@lang('sidebar.my_profile')</span>
             </a>
+            @if(auth()->user()->is_admin==2 )
+
              <a href="{{ route('customer.rapport') }}" class="waves-effect">
               <i class="bx bx-user-circle"></i>
               <span key="t-contact">manage rapport</span>
             </a>
+            @endif
           </li>
         @if(auth()->user()->is_admin==0)
         <li>
@@ -74,7 +77,7 @@
             </a>
           </li>
           <li>
-            <a href="{{ route('customer.rapports') }}" class="waves-effect">
+            <a href="{{ route('customer.rapport') }}" class="waves-effect">
               <i class="bx bxs-plane-take-off"></i>
               <span key="t-contact">rapports</span>
             </a>
