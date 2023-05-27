@@ -1,11 +1,10 @@
 @extends('layouts.master')
 
 @section('content')
-@if(auth()->user()->is_admin==0)
+@if(auth()->user()->is_admin==2)
 <section class="classes mt-5">
         <div class="classes-description mb-5">
-        <h2>Our Records</h2>
-        <h3>find most used aerports around the world</h3>
+            <a href="{{ route('customer.rapport.create') }}" class="btn btn-rounded btn-success waves-effect waves-light ms-2"><i class="bx bx-plus font-size-16 me-2 align-middle"></i>Add Rapport</a>
         </div>
         <?php
         $rapports = ["abu", "Bucharest", "damascus", "dubai"]; ?>

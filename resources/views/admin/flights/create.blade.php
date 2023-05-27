@@ -3,6 +3,11 @@
 @section('title')
   Add Flight
 @endsection
+@section('plugin-css')
+  <!-- Dropzone -->
+  <link href="{{ URL::asset('/assets/libs/dropzone/dropzone.min.css') }}" rel="stylesheet" type="text/css" />
+@endsection
+
 
 @section('content')
   <div class="row">
@@ -167,4 +172,12 @@
       <!-- end card -->
     </div> <!-- end col -->
   </div>
+@endsection
+
+
+@section('script')
+  <!-- Dropzone js -->
+  <script src="{{ URL::asset('/assets/libs/dropzone/dropzone.min.js') }}"></script>
+  {{-- Dropzone Config --}}
+  <script src="{{ URL::asset('assets/js/dropzone-config.js') }}"></script>
 @endsection

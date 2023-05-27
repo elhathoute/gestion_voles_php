@@ -13,7 +13,7 @@ use App\Http\Controllers\Admin\{
     ProfileController,
     TicketController
 };
-
+use App\Http\Controllers\RapportController;
 use App\Http\Controllers\SandboxController;
 use App\Http\Controllers\SidebarControler;
 
@@ -27,11 +27,10 @@ Route::post('search_flights/{NumVol?}/{compagnie?}/{aeroport?}/{provonance?}', [
     ->name('search-flight');
 
 //
-Route::get('/customer_rapport', function () {
-    return view('customer.rapport');
-})->name('customer.rapports');
-
-
+Route::get('/customer_rapport', [RapportController::class, 'index'])->middleware('auth')->name('customer.rapport');
+Route::get('/customer_rapport/create', [RapportController::class, 'create'])->middleware('auth')->name('customer.rapport.create');
+Route::post('/customer_rapport/store', [RapportController::class, 'store'])->middleware('auth')->name('customer.rapport.store');
+Route::delete('/customer_rapport', [RapportController::class, 'destroy'])->middleware('auth')->name('customer.rapport.destroy');
 
 
 
@@ -70,8 +69,8 @@ Route::group(["prefix" => 'dashboard'], function () {
             Route::get("flights/get-planes-by-airline", [FlightController::class, 'getPlanesByAirline'])->name('flights.getPlanesByAirline');
 
             Route::resource("flights", FlightController::class)->except('show');
-            Route::post("flight/canceled/{id}", [FlightController::class,'flight_canceled'])->name('flights.canceled');
-            Route::post("flight/delay/{id}", [FlightController::class,'flight_delay'])->name('flights.delay');
+            Route::post("flight/canceled/{id}", [FlightController::class, 'flight_canceled'])->name('flights.canceled');
+            Route::post("flight/delay/{id}", [FlightController::class, 'flight_delay'])->name('flights.delay');
 
 
             //customers

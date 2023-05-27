@@ -17,7 +17,6 @@
     <div class="col-xl-12">
         @if(auth()->user()->is_admin==2)
                 <iframe title="rapport" width="1500" height="700" src="https://app.powerbi.com/reportEmbed?reportId=7f1daa42-2dc2-4361-8112-81ad32a0a0c4&autoAuth=true&embeddedDemo=true" frameborder="0" allowFullScreen="true"></iframe>
-
         @elseif(auth()->user()->is_admin==1)
       <div class="row">
         <div class="col-md-4">

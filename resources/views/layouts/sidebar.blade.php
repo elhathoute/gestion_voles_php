@@ -61,6 +61,10 @@
               <i class="bx bx-user-circle"></i>
               <span key="t-contact">@lang('sidebar.my_profile')</span>
             </a>
+             <a href="{{ route('customer.rapport') }}" class="waves-effect">
+              <i class="bx bx-user-circle"></i>
+              <span key="t-contact">manage rapport</span>
+            </a>
           </li>
         @if(auth()->user()->is_admin==0)
         <li>
