@@ -11,7 +11,7 @@ use App\Http\Controllers\Admin\{
     PlaneController,
     FlightController,
     ProfileController,
-    TicketController
+   
 };
 use App\Http\Controllers\RapportController;
 use App\Http\Controllers\SandboxController;
@@ -84,7 +84,6 @@ Route::group(["prefix" => 'dashboard'], function () {
 
 Route::view('/', 'index');
 
-Route::view('/', 'index');
 Route::view('/about', [HomeController::class, 'about'])->name('about');
 
 
@@ -92,7 +91,7 @@ Route::view('/about', [HomeController::class, 'about'])->name('about');
 Route::post('/store-temp-file', [HomeController::class, 'storeTempFile'])->name('storeTempFile');
 Route::post('/delete-temp-file', [HomeController::class, 'deleteTempFile'])->name('deleteTempFile');
 
-Route::get('/get-random-customer', [SandboxController::class, 'randomCustomer'])->name('randomCustomer');
+
 
 //render files inside views/template folder
 Route::get('{any}', [HomeController::class, 'index'])->name('index');

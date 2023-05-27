@@ -6,6 +6,9 @@
         <div class="classes-description mb-5">
             <a href="{{ route('customer.rapport.create') }}" class="btn btn-rounded btn-success waves-effect waves-light ms-2"><i class="bx bx-plus font-size-16 me-2 align-middle"></i>Add Rapport</a>
         </div>
+        @endif
+
+     @if(auth()->user()->is_admin==2 || auth()->user()->is_admin==0)
         <div class="container">
         <h3 class="mt-3">Edition Mai 2023</h3>
         @foreach($rapports as $airport)

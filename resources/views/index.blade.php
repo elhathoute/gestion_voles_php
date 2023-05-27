@@ -40,7 +40,7 @@
               @csrf
             </form>
             <a href="/about">About</a>
-          <a href="{{route('customer.rapports')}}">Rapport</a>
+          <a href="{{route('customer.rapport')}}">Rapport</a>
           @else
           <a href="/about">About</a>
           <a href="{{ route('login') }}">Login</a>
@@ -48,6 +48,8 @@
               <a href="{{ route('register') }}">Register</a>
             @endif
           @endauth
+
+
         </div>
 
 
@@ -76,6 +78,7 @@
               </button>
             @endauth
           </div>
+
         </div>
       </div>
     </section>
