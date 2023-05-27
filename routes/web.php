@@ -27,7 +27,7 @@ Route::post('search_flights/{NumVol?}/{compagnie?}/{aeroport?}/{provonance?}', [
     ->name('search-flight');
 
 //
-Route::get('/customer_rapport', [RapportController::class, 'index'])->middleware('auth')->name('customer.rapport');
+Route::get('/customer_rapport', [RapportController::class, 'index'])->name('customer.rapport');
 Route::get('/customer_rapport/create', [RapportController::class, 'create'])->middleware('auth')->name('customer.rapport.create');
 Route::post('/customer_rapport/store', [RapportController::class, 'store'])->middleware('auth')->name('customer.rapport.store');
 Route::delete('/customer_rapport', [RapportController::class, 'destroy'])->middleware('auth')->name('customer.rapport.destroy');
