@@ -37,12 +37,20 @@ class RapportController extends Controller
      */
     public function store(StoreRapportRequest $request)
     {
-        dd($request);
-        $rapport = Rapport::create($request->validated());
+        // dd($request);
+        // $rapport = Rapport::create($request->validated['name']);
+        // $rapport = Rapport::create(['name' => $request->validated['name']]);
+        $validated = $request->validated();
+
+        $rapport = Rapport::create([
+            'name' => $validated['name']
+        ]);
+
+
         // move file to /public rapports
         $request->file('file')->move(public_path('rapports'), $rapport->name . '.pdf');
 
-        return redirect()->route('customer.rapports.index')->with('success', 'Rapport created successfully.');
+        return redirect()->back()->with('success', 'Rapport created successfully.');
     }
 
     /**
