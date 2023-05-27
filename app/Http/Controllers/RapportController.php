@@ -53,42 +53,20 @@ class RapportController extends Controller
         return redirect()->back()->with('success', 'Rapport created successfully.');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Rapport  $rapport
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Rapport $rapport)
-    {
-        //
-    }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Rapport  $rapport
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Rapport $rapport)
-    {
-        //
-    }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \App\Http\Requests\UpdateRapportRequest  $request
-     * @param  \App\Models\Rapport  $rapport
-     * @return \Illuminate\Http\Response
-     */
-    public function update(UpdateRapportRequest $request, Rapport $rapport)
-    {
-        //
-    }
+
 
 
     public function destroy()
     {
+        // delete all files in /public rapports
+        $files = glob(public_path('rapports/*'));
+        foreach ($files as $file) {
+            if (is_file($file)) {
+                unlink($file);
+            }
+        }
+        return redirect()->route('customer.rapports.index')->with('success', 'Rapports deleted successfully.');
     }
 }
