@@ -27,7 +27,32 @@
     <div class="main-content">
       <div class="page-content">
         <div class="container-fluid">
-          @yield('content')
+            <div class="primary-overlay">
+                <div class="selling-point">
+                  <h2>Let your mind breathe.</h2>
+                  <h3>
+                    The world is a book and those who do not travel read only one page.
+                  </h3>
+                  <div class="ctas">
+                    @auth
+                      <button class="cta-main">
+                        @if (Auth::user()->is_admin)
+                          <a href="{{ route('root') }}">Dashboard</a>
+                        @else
+                          <a href="{{ route('customer.flights') }}">Search A Flight</a>
+                        @endif
+                      </button>
+                    @else
+                      <button class="cta-main">
+                          <a href="{{ route('customer.flights') }}">Search A Flight</a>
+                      </button>
+                      <button class="cta-sec">
+                        <a href="{{ route('register') }}">Sign up</a>
+                      </button>
+                    @endauth
+                  </div>
+                </div>
+              </div>
         </div>
         <!-- container-fluid -->
       </div>
