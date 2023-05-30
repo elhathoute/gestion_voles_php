@@ -8,6 +8,8 @@
   <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
   <meta content="Themesbrand" name="author" />
   <meta name="_token" content="{{ csrf_token() }}">
+  <link rel="stylesheet" href="{{ asset('frontend/style.css') }}" />
+
   <!-- App favicon -->
   <link rel="shortcut icon" href="{{ URL::asset('assets/images/favicon.ico') }}">
   @include('layouts.head-css')
@@ -15,7 +17,7 @@
 
 @section('body')
 
-  <body data-sidebar="dark">
+  <body data-sidebar="dark" class="sidebar-enable vertical-collpsed">
   @show
   <!-- Begin page -->
   <div id="layout-wrapper">
