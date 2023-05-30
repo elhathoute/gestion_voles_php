@@ -11,7 +11,7 @@ use App\Http\Controllers\Admin\{
     PlaneController,
     FlightController,
     ProfileController,
-   
+
 };
 use App\Http\Controllers\RapportController;
 use App\Http\Controllers\SandboxController;
@@ -26,7 +26,9 @@ Route::post('search_flights/{NumVol?}/{compagnie?}/{aeroport?}/{provonance?}', [
     ->middleware('auth')
     ->name('search-flight');
 
-//
+//insert in db ipa
+Route::get('/flights/ipa/insert', [FlightController::class, 'insertFlightsIpa'])->name('flights.ipa.insert');
+
 Route::get('/customer_rapport', [RapportController::class, 'index'])->name('customer.rapport');
 Route::get('/customer_rapport/create', [RapportController::class, 'create'])->middleware('auth')->name('customer.rapport.create');
 Route::post('/customer_rapport/store', [RapportController::class, 'store'])->middleware('auth')->name('customer.rapport.store');

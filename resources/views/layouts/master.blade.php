@@ -15,7 +15,8 @@
 
 @section('body')
 
-  <body data-sidebar="dark">
+
+  <body  data-sidebar="dark">
   @show
   <!-- Begin page -->
   <div id="layout-wrapper">
@@ -24,7 +25,7 @@
     <!-- ============================================================== -->
     <!-- Start right Content here -->
     <!-- ============================================================== -->
-    <div class="main-content">
+    <div  class="main-content">
       <div class="page-content">
         <div class="container-fluid">
           @yield('content')

@@ -8,6 +8,7 @@ use App\Models\Plane;
 use App\Models\Flight;
 use App\Models\Airline;
 use App\Models\Airport;
+use App\Models\IpaFlight;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
@@ -16,6 +17,40 @@ use Illuminate\Support\Facades\Validator;
 
 class FlightController extends Controller
 {
+    // insert flights ipa
+    public function insertFlightsIpa(Request $request)
+    {
+        $flightArray = $request->input('flightArray');
+        foreach ($flightArray as $flightData) {
+            $ipaFlight = new IpaFlight;
+            $ipaFlight->hex = $flightData['hex'];
+            $ipaFlight->reg_number = $flightData['reg_number'];
+            $ipaFlight->flag = $flightData['flag'];
+            $ipaFlight->lat = $flightData['lat'];
+            $ipaFlight->lng = $flightData['lng'];
+            $ipaFlight->alt = $flightData['alt'];
+            $ipaFlight->dir = $flightData['dir'];
+            $ipaFlight->speed = $flightData['speed'];
+            $ipaFlight->v_speed = $flightData['v_speed'];
+            $ipaFlight->squawk = $flightData['squawk'];
+            $ipaFlight->flight_number = $flightData['flight_number'];
+            $ipaFlight->flight_icao = $flightData['flight_icao'];
+            // $ipaFlight->flight_iata = $flightData['flight_iata'];
+            $ipaFlight->dep_icao = $flightData['dep_icao'];
+            $ipaFlight->dep_iata = $flightData['dep_iata'];
+            // $ipaFlight->arr_icao = $flightData['arr_icao'];
+            // $ipaFlight->arr_iata = $flightData['arr_iata'];
+            $ipaFlight->airline_icao = $flightData['airline_icao'];
+            // $ipaFlight->airline_iata = $flightData['airline_iata'];
+            $ipaFlight->aircraft_icao = $flightData['aircraft_icao'];
+            $ipaFlight->updated = $flightData['updated'];
+            $ipaFlight->status = $flightData['status'];
+            $ipaFlight->save();
+        }
+        $response = ['status' => 'success', 'message' => 'Flight data inserted successfully'];
+
+        return response()->json($response);
+    }
     // cancel flight
     public function flight_canceled(Request $request,$id=null){
         $flight_id=$id;
@@ -53,14 +88,21 @@ class FlightController extends Controller
         if ($flightNumber) {
             // Search flight by flight number
             $customer_flights = Flight::where('flight_number', $flightNumber)->paginate(1);
+            $ipa_flights = IpaFlight::where('flight_number', $flightNumber)->paginate(1);
         }
         else if ($flightCmp || $flightAeoropt) {
-        
+
             // Search flight by company/compagnie
             $customer_flights = Flight::where('airline_id', $flightCmp)
             ->orWhere('origin_id', $flightAeoropt)
             ->orWhere('destination_id', $flightAeoropt)
             ->paginate(6);
+            // flight ipa
+            $ipa_flights = IpaFlight::where('airline_icao', $flightCmp)
+            ->orWhere('dep_icao', $flightAeoropt)
+            ->orWhere('arr_icao', $flightAeoropt)
+            ->paginate(6);
+
         }
         else if($provonance){
             $airport = Airport::where(function ($query) use ($provonance) {
@@ -75,6 +117,8 @@ class FlightController extends Controller
              ->orWhereIn('destination_id', $airportId)
 
              ->paginate(6);
+            //  get all ipa
+            $ipa_flights = IpaFlight::paginate(6);
 
         }
 
@@ -82,9 +126,10 @@ class FlightController extends Controller
         else {
             // No search inputs provided, return all flights
             $customer_flights = Flight::paginate(6);
+            $ipa_flights = IpaFlight::paginate(6);
         }
 
-        return view('customer.flights', compact('customer_flights'))->withInput($request->input())->with(['request' => $request]);
+        return view('customer.flights', compact('customer_flights','ipa_flights'))->withInput($request->input())->with(['request' => $request]);
     }
 
 
@@ -93,8 +138,10 @@ class FlightController extends Controller
     public function customer_flights(Request $request){
         $customer_flights= Flight::paginate(6);
 
+        $ipa_flights= IpaFlight::paginate(6);
 
-    return view('customer.flights', compact('customer_flights'));
+
+    return view('customer.flights', compact('customer_flights','ipa_flights'));
 
 
     }
